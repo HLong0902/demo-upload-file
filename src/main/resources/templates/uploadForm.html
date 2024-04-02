@@ -1,0 +1,37 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <title>Upload File</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <!--	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <script th:src="@{/src/js/vendor/jquery-3.3.1.min.js}" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <div th:if="${message}">
+        <h2 th:text="${message}"/>
+    </div>
+
+    <div>
+        <form method="POST" enctype="multipart/form-data" action="/">
+            <div class="mb-3">
+                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                <input class="form-control" name="file" type="file" id="formFileMultiple" multiple>
+            </div>
+            <input type="submit" value="Upload"/>
+        </form>
+    </div>
+
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="file : ${files}">
+                <a th:href="${file.value}" th:text="${file.key}"/>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<div>
+    <form id="fileForm" method="POST" enctype="multipart/form-data" action="/">
+        <div class="mb-3">
+            <label for="fileInput" class="form-label">Multiple files input example</label>
+            <input class="form-control" name="file" type="file" id="fileInput" multiple>
+        </div>
+        <input type="button" onclick="validateFileSize()" value="Upload"/>
+    </form>
+    <script type="text/javascript">
+        function validateFileSize() {
+            let fileInput = document.getElementById('fileInput');
+            let isSubmit = true;
+            for (let i = 0; i < fileInput.files.length; i++) {
+                let fileSize = fileInput.files[i].size; // Kích thước tệp tính bằng byte
+                let maxSize = 1024 * 1024 * 300; // 1 MB (để kiểm tra tệp có lớn hơn 1 MB không)
+
+                if (fileSize > maxSize) {
+                    document.getElementById('fileForm').reset(); // Xóa nội dung của input file
+                    isSubmit = false;
+                    alert('Each file size must not exceed 300MB.');
+                }
+            }
+            if (isSubmit && fileInput.files[0].size > 0) {
+                document.getElementById('fileForm').submit(); // Submit form nếu kích thước tệp hợp lệ
+            }
+        }
+
+        function cleanFileNamesBeforeSubmit() {
+            let fileInput = document.getElementById('fileInput');
+            let formData = new FormData();
+            // Clean tên của tất cả các tệp
+            for (let i = 0; i < fileInput.files.length; i++) {
+                let originalFile = fileInput.files[i];
+                let originalFileName = originalFile.name;
+                let cleanedFileName = cleanFileName(originalFileName);
+
+                // Tạo Blob mới với tên đã được clean
+                let cleanedBlob = new Blob([originalFile], { type: originalFile.type });
+
+                // Tạo File mới từ Blob mới
+                let cleanedFile = new File([cleanedBlob], cleanedFileName, { type: originalFile.type });
+
+                formData.append("file", cleanedFile);
+
+                console.log(formData); // Kiểm tra kiểu, trả về "object"
+                console.log(cleanedFileName); // In ra tên đã được clean
+            }
+
+            // Gửi form
+            document.getElementById('fileForm').submit();
+        }
+
+        function cleanFileName(originalFileName) {
+            // Thay thế tất cả các ký tự đặc biệt bằng ký tự rỗng
+            return originalFileName.replace(/[^\w.-]/g, '');
+        }
+    </script>
+</div>

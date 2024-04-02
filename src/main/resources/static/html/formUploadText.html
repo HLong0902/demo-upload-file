@@ -1,0 +1,10 @@
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form action="uploadText"  method="post" >
+        <textarea name="data" th:value="*{data}" minlength="1"   class="form-control"  style="height: 480px !important;  word-wrap: break-word;"></textarea>
+        <button class="btn" name="registration" style=" background-color: gray; width:100% " type="Submit">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,540 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LPBank</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <!--        <link rel="icon" href="../favicon.ico" type="image/x-icon" />-->
+    <!--    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>-->
+
+    <!--    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">-->
+
+    <!--        <link rel="stylesheet" href="../plugins/bootstrap/dist/css/bootstrap.min.css">-->
+    <!--        <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">-->
+    <!--        <link rel="stylesheet" href="../plugins/ionicons/dist/css/ionicons.min.css">-->
+    <!--        <link rel="stylesheet" href="../plugins/icon-kit/dist/css/iconkit.min.css">-->
+    <!--        <link rel="stylesheet" href="../plugins/perfect-scrollbar/css/perfect-scrollbar.css">-->
+    <!--        <link rel="stylesheet" href="../plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css">-->
+    <!--        <link rel="stylesheet" href="../dist/css/theme.min.css">-->
+    <!--        <script src="../src/js/vendor/modernizr-2.8.3.min.js"></script>-->
+    <link rel="stylesheet" th:href="@{/src/js/vendor/fonts.googleapis.com.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/plugins/bootstrap/dist/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/plugins/ionicons/dist/css/ionicons.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/plugins/icon-kit/dist/css/iconkit.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/plugins/perfect-scrollbar/css/perfect-scrollbar.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/dist/css/theme.min.css}" type="text/css"/>
+    <script th:src="@{/src/js/vendor/modernizr-2.8.3.min.js}" type="text/javascript"></script>
+</head>
+
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div class="wrapper">
+    <header class="header-top" header-theme="light">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between">
+                <div class="top-menu d-flex align-items-center">
+                    <!--                    <button type="button" class="btn-icon mobile-nav-toggle d-lg-none"><span></span></button>-->
+                    <!--                    <div class="header-search">-->
+                    <!--                        <div class="input-group">-->
+                    <!--                            <span class="input-group-addon search-close"><i class="ik ik-x"></i></span>-->
+                    <!--                            <input type="text" class="form-control">-->
+                    <!--                            <span class="input-group-addon search-btn"><i class="ik ik-search"></i></span>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <!--                    <button type="button" id="navbar-fullscreen" class="nav-link"><i class="ik ik-maximize"></i>-->
+                    <!--                    </button>-->
+                </div>
+                <div class="top-menu d-flex align-items-center">
+                    <div class="dropdown">
+                        <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#"
+                           id="userDropdown" role="button"><img alt="" class="avatar" src="../img/user.jpg"></a>
+                        <div aria-labelledby="userDropdown" class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><i class="ik ik-user dropdown-icon"></i> <span
+                                    th:text="${username}"></span></a>
+                            <a class="dropdown-item" href="logout"><i class="ik ik-power dropdown-icon"></i> Logout</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-wrap">
+        <div class="app-sidebar colored">
+            <div class="sidebar-header">
+                <a class="header-brand" href="#">
+                    <span class="text">LPBank</span>
+                </a>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="nav-container">
+                    <nav class="navigation-main" id="main-menu-navigation">
+                        <div class="nav-lavel">Navigation</div>
+                        <div class="nav-item has-sub">
+                            <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Files</span></a>
+                            <div class="submenu-content">
+                                <a class="menu-item" href="#" id="uploadFileId">Upload Files</a>
+                                <a class="menu-item" href="/upload" id="listFileId">List File</a>
+                            </div>
+                        </div>
+                        <div class="nav-item has-sub">
+                            <a href="javascript:void(0)"><i class="ik ik-layers"></i><span>Text</span></a>
+                            <div class="submenu-content">
+                                <a class="menu-item" href="#" id="uploadTextId">Upload Text</a>
+                                <a class="menu-item" href="/upload" id="listTextId">List File text</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="container-fluid" id="contentPageId">
+                <div class="page-header">
+                    <div class="row align-items-end">
+                        <div class="col-lg-8">
+                            <div class="page-header-title">
+                                <i class="ik ik-inbox bg-blue"></i>
+                                <div class="d-inline">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="list-file" th:style="${viewText == 'show' ? 'display:none' : 'display:block'}">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header d-block">
+                                <h3>List uploaded files of <span th:text="${username}"></span></h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="dt-responsive">
+                                    <table class="table table-striped table-bordered nowrap"
+                                           id="alt-pg-dt">
+                                        <thead>
+                                        <tr>
+                                            <th>File name</th>
+                                            <th>Upload time</th>
+                                            <th>size</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="file : ${files}">
+                                            <td><a th:href="${file.link}" th:text="${file.name}"/></td>
+                                            <td th:text="${file.date}"></td>
+                                            <td th:text="${file.size}"></td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <!--                                        <tr>-->
+                                        <!--                                            <th>File name</th>-->
+                                        <!--                                            <th>Upload time</th>-->
+                                        <!--                                            <th>size</th>-->
+                                        <!--                                        </tr>-->
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="list-text" th:style="${viewText == 'show' ? 'display:block' : 'display:none'}">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header d-block">
+                                <h3>Upload Content</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="dt-responsive">
+                                    <table class="table table-striped table-bordered nowrap">
+                                        <thead>
+                                        <tr>
+                                            <th>Upload time</th>
+                                            <th>Content</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr data-th-each="message : ${message}">
+                                            <td data-th-text="${message.createdDate}">...</td>
+                                            <td data-th-text="${message.content}"
+                                                style="line-break: auto;  word-break: break-all;">...
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="formUploadText" style="display:none;">
+                <div>
+                    <form action="uploadText" method="post">
+                        <textarea class="form-control" minlength="1" name="data" style="height: 480px !important;  word-wrap: break-word;"
+                                  th:value="*{data}"></textarea>
+                        <button class="btn" name="registration" style=" background-color: gray; width:100% "
+                                type="Submit">Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div id="formUploadFile" style="display:none;">
+                <div>
+                    <form action="/" enctype="multipart/form-data" id="fileForm" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="fileInput">Multiple files input example</label>
+                            <input class="form-control" id="fileInput" multiple name="file" type="file">
+                        </div>
+                        <input onclick="validateFileSize()" type="button" value="Upload"/>
+                    </form>
+                    <script type="text/javascript">
+                        function validateFileSize() {
+                            var fileInput = document.getElementById('fileInput');
+                            var isSubmit = true;
+                            for (var i = 0; i < fileInput.files.length; i++) {
+                                var fileSize = fileInput.files[i].size; // Kích thước tệp tính bằng byte
+                                var maxSize = 1024 * 1024 * 300; // 1 MB (để kiểm tra tệp có lớn hơn 1 MB không)
+
+                                if (fileSize > maxSize) {
+                                    document.getElementById('fileForm').reset(); // Xóa nội dung của input file
+                                    isSubmit = false;
+                                    alert('Each file size must not exceed 300MB.');
+                                }
+                            }
+                            if (isSubmit && fileInput.files[0].size > 0) {
+                                document.getElementById('fileForm').submit(); // Submit form nếu kích thước tệp hợp lệ
+                            }
+                        }
+
+                    </script>
+                </div>
+            </div>
+
+        </div>
+        <aside class="right-sidebar">
+            <div class="sidebar-chat" data-plugin="chat-sidebar">
+                <div class="sidebar-chat-info">
+                    <h6>Chat List</h6>
+                    <form class="mr-t-10">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Search for friends ..." type="text">
+                            <i class="ik ik-search"></i>
+                        </div>
+                    </form>
+                </div>
+                <div class="chat-list">
+                    <div class="list-group row">
+                        <a class="list-group-item" data-chat-user="Gene Newman" href="javascript:void(0)">
+                            <figure class="user--online">
+                                <img alt="" class="rounded-circle" src="../img/users/1.jpg">
+                            </figure>
+                            <span><span class="name">Gene Newman</span>  <span
+                                    class="username">@gene_newman</span> </span>
+                        </a>
+                        <a class="list-group-item" data-chat-user="Billy Black" href="javascript:void(0)">
+                            <figure class="user--online">
+                                <img alt="" class="rounded-circle" src="../img/users/2.jpg">
+                            </figure>
+                            <span><span class="name">Billy Black</span>  <span
+                                    class="username">@billyblack</span> </span>
+                        </a>
+                        <a class="list-group-item" data-chat-user="Herbert Diaz" href="javascript:void(0)">
+                            <figure class="user--online">
+                                <img alt="" class="rounded-circle" src="../img/users/3.jpg">
+                            </figure>
+                            <span><span class="name">Herbert Diaz</span>  <span class="username">@herbert</span> </span>
+                        </a>
+                        <a class="list-group-item" data-chat-user="Sylvia Harvey" href="javascript:void(0)">
+                            <figure class="user--busy">
+                                <img alt="" class="rounded-circle" src="../img/users/4.jpg">
+                            </figure>
+                            <span><span class="name">Sylvia Harvey</span>  <span class="username">@sylvia</span> </span>
+                        </a>
+                        <a class="list-group-item active" data-chat-user="Marsha Hoffman" href="javascript:void(0)">
+                            <figure class="user--busy">
+                                <img alt="" class="rounded-circle" src="../img/users/5.jpg">
+                            </figure>
+                            <span><span class="name">Marsha Hoffman</span>  <span
+                                    class="username">@m_hoffman</span> </span>
+                        </a>
+                        <a class="list-group-item" data-chat-user="Mason Grant" href="javascript:void(0)">
+                            <figure class="user--offline">
+                                <img alt="" class="rounded-circle" src="../img/users/1.jpg">
+                            </figure>
+                            <span><span class="name">Mason Grant</span>  <span
+                                    class="username">@masongrant</span> </span>
+                        </a>
+                        <a class="list-group-item" data-chat-user="Shelly Sullivan" href="javascript:void(0)">
+                            <figure class="user--offline">
+                                <img alt="" class="rounded-circle" src="../img/users/2.jpg">
+                            </figure>
+                            <span><span class="name">Shelly Sullivan</span>  <span
+                                    class="username">@shelly</span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="chat-panel" hidden>
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <a href="javascript:void(0);"><i class="ik ik-message-square text-success"></i></a>
+                    <span class="user-name">John Doe</span>
+                    <button aria-label="Close" class="close" type="button"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="card-body">
+                    <div class="widget-chat-activity flex-1">
+                        <div class="messages">
+                            <div class="message media reply">
+                                <figure class="user--online">
+                                    <a href="#">
+                                        <img alt="" class="rounded-circle" src="../img/users/3.jpg">
+                                    </a>
+                                </figure>
+                                <div class="message-body media-body">
+                                    <p>Epic Cheeseburgers come in all kind of styles.</p>
+                                </div>
+                            </div>
+                            <div class="message media">
+                                <figure class="user--online">
+                                    <a href="#">
+                                        <img alt="" class="rounded-circle" src="../img/users/1.jpg">
+                                    </a>
+                                </figure>
+                                <div class="message-body media-body">
+                                    <p>Cheeseburgers make your knees weak.</p>
+                                </div>
+                            </div>
+                            <div class="message media reply">
+                                <figure class="user--offline">
+                                    <a href="#">
+                                        <img alt="" class="rounded-circle" src="../img/users/5.jpg">
+                                    </a>
+                                </figure>
+                                <div class="message-body media-body">
+                                    <p>Cheeseburgers will never let you down.</p>
+                                    <p>They'll also never run around or desert you.</p>
+                                </div>
+                            </div>
+                            <div class="message media">
+                                <figure class="user--online">
+                                    <a href="#">
+                                        <img alt="" class="rounded-circle" src="../img/users/1.jpg">
+                                    </a>
+                                </figure>
+                                <div class="message-body media-body">
+                                    <p>A great cheeseburger is a gastronomical event.</p>
+                                </div>
+                            </div>
+                            <div class="message media reply">
+                                <figure class="user--busy">
+                                    <a href="#">
+                                        <img alt="" class="rounded-circle" src="../img/users/5.jpg">
+                                    </a>
+                                </figure>
+                                <div class="message-body media-body">
+                                    <p>There's a cheesy incarnation waiting for you no matter what you palete
+                                        preferences are.</p>
+                                </div>
+                            </div>
+                            <div class="message media">
+                                <figure class="user--online">
+                                    <a href="#">
+                                        <img alt="" class="rounded-circle" src="../img/users/1.jpg">
+                                    </a>
+                                </figure>
+                                <div class="message-body media-body">
+                                    <p>If you are a vegan, we are sorry for you loss.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form action="javascript:void(0)" class="card-footer" method="post">
+                    <div class="d-flex justify-content-end">
+                        <textarea class="border-0 flex-1" placeholder="Type your message here" rows="1"></textarea>
+                        <button class="btn btn-icon" type="submit"><i class="ik ik-arrow-right text-success"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="w-100 clearfix">
+            </div>
+        </footer>
+    </div>
+</div>
+
+
+<div aria-hidden="true" aria-labelledby="appsModalLabel" class="modal fade apps-modal" data-backdrop="false" id="appsModal"
+     role="dialog" tabindex="-1">
+    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><i class="ik ik-x-circle"></i></button>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="quick-search">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 ml-auto mr-auto">
+                            <div class="input-wrap">
+                                <input class="form-control" id="quick-search" placeholder="Search..." type="text"/>
+                                <i class="ik ik-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body d-flex align-items-center">
+                <div class="container">
+                    <div class="apps-wrap">
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-mail"></i><span>Message</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-users"></i><span>Accounts</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-shopping-cart"></i><span>Sales</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-briefcase"></i><span>Purchase</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-server"></i><span>Menus</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-clipboard"></i><span>Pages</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-message-square"></i><span>Chats</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-map-pin"></i><span>Contacts</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-box"></i><span>Blocks</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-calendar"></i><span>Events</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-bell"></i><span>Notifications</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-pie-chart"></i><span>Reports</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-layers"></i><span>Tasks</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-edit"></i><span>Blogs</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-settings"></i><span>Settings</span></a>
+                        </div>
+                        <div class="app-item">
+                            <a href="#"><i class="ik ik-more-horizontal"></i><span>More</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<!--        <script>window.jQuery || document.write('<script src="../src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>-->
+<!--        <script src="../plugins/popper.js/dist/umd/popper.min.js"></script>-->
+<!--        <script src="../plugins/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!--        <script src="../plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>-->
+<!--        <script src="../plugins/screenfull/dist/screenfull.js"></script>-->
+<!--        <script src="../plugins/datatables.net/js/jquery.dataTables.min.js"></script>-->
+<!--        <script src="../plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>-->
+<!--        <script src="../dist/js/theme.min.js"></script>-->
+<!--        <script src="../js/datatables.js"></script>-->
+
+<script>window.jQuery || document.write('<script th:src="@{/src/js/vendor/jquery-3.3.1.min.js}"><\/script>')</script>
+<!--<script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}" type="text/javascript"></script>-->
+<script th:src="@{/src/js/vendor/jquery-3.3.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/popper.js/dist/umd/popper.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/bootstrap/dist/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/screenfull/dist/screenfull.js}" type="text/javascript"></script>
+<script th:src="@{/dist/js/theme.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/datatables.net/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/datatables.js}" type="text/javascript"></script>
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+    (function (b, o, i, l, e, r) {
+        b.GoogleAnalyticsObject = l;
+        b[l] || (b[l] =
+            function () {
+                (b[l].q = b[l].q || []).push(arguments)
+            });
+        b[l].l = +new Date;
+        e = o.createElement(i);
+        r = o.getElementsByTagName(i)[0];
+<!--        e.src = 'https://www.google-analytics.com/analytics.js';
+        -- >
+        r.parentNode.insertBefore(e, r)
+    }(window, document, 'script', 'ga'));
+    ga('create', 'UA-XXXXX-X', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function () {
+        $("#uploadFileId").click(function (e) {
+            e.preventDefault();
+            $("#contentPageId").hide();
+            $("#formUploadFile").show();
+            $("#formUploadText").hide();
+        });
+    });
+
+    $(document).ready(function () {
+        $("#uploadTextId").click(function (e) {
+            e.preventDefault();
+            $("#contentPageId").hide();
+            $("#formUploadText").show();
+            $("#formUploadFile").hide();
+        });
+    });
+
+    $(document).ready(function () {
+        $("#listTextId").click(function (e) {
+            e.preventDefault();
+            $("#contentPageId").show();
+            $("#list-text").show();
+            $("#formUploadText").hide();
+            $("#formUploadFile").hide();
+            $("#list-file").hide();
+        });
+    });
+    /*]]>*/
+
+</script>
+</body>
+</html>
